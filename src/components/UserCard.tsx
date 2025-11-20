@@ -1,5 +1,5 @@
 // Individual user card component with edit and delete actions
-import { User } from '../types/User';
+import type { User } from '../types/User';
 import { Link } from 'react-router-dom';
 import '../styles/UserCard.css';
 
@@ -9,7 +9,7 @@ interface UserCardProps {
   isLoading?: boolean;
 }
 
-export const UserCard = ({ user, onDelete, isLoading = false }: UserCardProps) => {
+export const UserCard = ({ user, onDelete, isLoading = false }: UserCardProps): JSX.Element => {
   // Handle delete with confirmation
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete ${user.name}?`)) {
@@ -20,7 +20,7 @@ export const UserCard = ({ user, onDelete, isLoading = false }: UserCardProps) =
   // Get initials for avatar
   const getInitials = (name: string) => {
     return name
-      .split(' ')
+      .split(/\s+/)
       .map(word => word[0])
       .join('')
       .toUpperCase()

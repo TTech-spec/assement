@@ -1,16 +1,16 @@
 // Home page displaying all users with CRUD operations
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserList } from '../components/UserList';
 import { UserForm } from '../components/UserForm';
-import { User, UserFormData } from '../types/User';
+import type { User, UserFormData } from '../types/User';
+
 import * as api from '../services/api';
 import '../styles/HomePage.css';
 
-export const HomePage = () => {
+export const HomePage = (): JSX.Element => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,7 +22,7 @@ export const HomePage = () => {
   // Load users from API
   const loadUsers = async () => {
     setIsLoading(true);
-    setError(null);
+    setError(undefined);
     try {
       const data = await api.fetchUsers();
       setUsers(data);
@@ -94,7 +94,7 @@ export const HomePage = () => {
           users={users}
           onDelete={handleDeleteUser}
           isLoading={isLoading}
-          error={error || undefined}
+          error={error}
         />
       </div>
     </div>

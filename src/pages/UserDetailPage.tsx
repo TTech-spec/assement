@@ -1,14 +1,15 @@
 // Detailed user view and edit page
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { User, UserFormData } from '../types/User';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import type { User, UserFormData } from '../types/User';
 import { UserForm } from '../components/UserForm';
 import * as api from '../services/api';
 import '../styles/UserDetailPage.css';
 
-export const UserDetailPage = () => {
+export const UserDetailPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,10 +18,17 @@ export const UserDetailPage = () => {
 
   // Fetch user details on component mount
   useEffect(() => {
-    if (id) {
-      loadUser(parseInt(id));
+    if (id && /^\d+$/.test(id)) {
+      loadUser(parseInt(id, 10));
+    } else if (id) {
+      setError('Invalid user ID provided.');
     }
   }, [id]);
+
+  // Set editing mode based on URL
+  useEffect(() => {
+    setIsEditing(location.pathname.includes('/edit'));
+  }, [location.pathname]);
 
   // Load user from API
   const loadUser = async (userId: number) => {
@@ -29,10 +37,6 @@ export const UserDetailPage = () => {
     try {
       const data = await api.fetchUserById(userId);
       setUser(data);
-      // Check if we're in edit mode from URL
-      if (window.location.pathname.includes('/edit')) {
-        setIsEditing(true);
-      }
     } catch (err) {
       setError('Failed to load user details. Please try again.');
       console.error(err);

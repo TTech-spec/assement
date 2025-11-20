@@ -1,6 +1,6 @@
 // Form component for creating and updating users
 import { useState, useEffect } from 'react';
-import { User, UserFormData } from '../types/User';
+import type { User, UserFormData } from '../types/User';
 import '../styles/UserForm.css';
 
 interface UserFormProps {
@@ -10,7 +10,7 @@ interface UserFormProps {
   isEditing?: boolean;
 }
 
-export const UserForm = ({ onSubmit, initialData, isLoading = false, isEditing = false }: UserFormProps) => {
+export const UserForm = ({ onSubmit, initialData, isLoading = false, isEditing = false }: UserFormProps): JSX.Element => {
   const [formData, setFormData] = useState<UserFormData>({
     name: '',
     email: '',
@@ -22,7 +22,7 @@ export const UserForm = ({ onSubmit, initialData, isLoading = false, isEditing =
 
   // Pre-fill form if editing
   useEffect(() => {
-    if (initialData) {
+    if (isEditing && initialData) {
       setFormData({
         name: initialData.name,
         email: initialData.email,
@@ -30,15 +30,15 @@ export const UserForm = ({ onSubmit, initialData, isLoading = false, isEditing =
         username: initialData.username,
       });
     }
-  }, [initialData]);
+  }, [initialData, isEditing]);
 
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name as keyof UserFormData]: value }));
     // Clear error for this field when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+    if (errors[name as keyof UserFormData]) {
+      setErrors(prev => ({ ...prev, [name as keyof UserFormData]: '' }));
     }
   };
 

@@ -1,5 +1,5 @@
 // API service for handling all CRUD operations
-import { User, UserFormData } from '../types/User';
+import type { User, UserFormData } from '../types/User';
 
 const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
