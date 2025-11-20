@@ -1,2 +1,2 @@
 import '../styles/UserDetailPage.css';
-export declare const UserDetailPage: () => import("react/jsx-runtime").JSX.Element;
+export declare const UserDetailPage: () => JSX.Element;

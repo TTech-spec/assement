@@ -1,4 +1,4 @@
-import { User, UserFormData } from '../types/User';
+import type { User, UserFormData } from '../types/User';
 import '../styles/UserForm.css';
 interface UserFormProps {
     onSubmit: (userData: UserFormData) => void;
@@ -6,5 +6,5 @@ interface UserFormProps {
     isLoading?: boolean;
     isEditing?: boolean;
 }
-export declare const UserForm: ({ onSubmit, initialData, isLoading, isEditing }: UserFormProps) => import("react/jsx-runtime").JSX.Element;
+export declare const UserForm: ({ onSubmit, initialData, isLoading, isEditing }: UserFormProps) => JSX.Element;
 export {};

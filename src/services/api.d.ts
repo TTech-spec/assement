@@ -1,4 +1,4 @@
-import { User, UserFormData } from '../types/User';
+import type { User, UserFormData } from '../types/User';
 export declare const fetchUsers: () => Promise<User[]>;
 export declare const fetchUserById: (id: number) => Promise<User>;
 export declare const createUser: (userData: UserFormData) => Promise<User>;
